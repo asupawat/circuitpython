@@ -161,7 +161,11 @@ STATIC mp_obj_t array_make_new(const mp_obj_type_t *type_in, size_t n_args, size
 
     // get typecode
     const char *typecode = mp_obj_str_get_str(args[0]);
-
+    
+    if(*typecode == 'S') {
+        // a typecode accepted by mp_binary_get_size but not OK for array
+        mp_raise_ValueError("bad typecode");
+    }
     if (n_args == 1) {
         // 1 arg: make an empty array
         return MP_OBJ_FROM_PTR(array_new(*typecode, 0));
