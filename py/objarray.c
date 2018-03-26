@@ -121,6 +121,9 @@ STATIC mp_obj_t array_construct(char typecode, mp_obj_t initializer) {
         && mp_get_buffer(initializer, &bufinfo, MP_BUFFER_READ)) {
         // construct array from raw bytes
         // we round-down the len to make it a multiple of sz (CPython raises error)
+        if(typecode == 'O') {
+            mp_raise_ValueError("cannot construct array(O) from bytearray");
+        }
         size_t sz = mp_binary_get_size('@', typecode, NULL);
         size_t len = bufinfo.len / sz;
         mp_obj_array_t *o = array_new(typecode, len);

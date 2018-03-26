@@ -53,3 +53,11 @@ def f():
     a.extend(array.array('P', [4]))
     print(a)
 raises(f)
+
+def f():
+    a = array.array('O', bytearray('bbbbbbbb'))
+    print(a)
+raises(f)
+
+def f():
+    a = array.array('O', bytearray('bbbbbbbb'))
