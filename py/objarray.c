@@ -424,7 +424,8 @@ STATIC mp_obj_t array_subscr(mp_obj_t self_in, mp_obj_t index_in, mp_obj_t value
                 if (MP_OBJ_IS_OBJ(value) && ((mp_obj_base_t*)MP_OBJ_TO_PTR(value))->type->subscr == array_subscr) {
                     // value is array, bytearray or memoryview
                     mp_obj_array_t *src_slice = MP_OBJ_TO_PTR(value);
-                    if (item_sz != mp_binary_get_size('@', src_slice->typecode & TYPECODE_MASK, NULL)) {
+                    if ((o->typecode & TYPECODE_MASK)
+                        != (src_slice->typecode & TYPECODE_MASK)) {
                     compat_error:
                         mp_raise_ValueError("lhs and rhs should be compatible");
                     }
