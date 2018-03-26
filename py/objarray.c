@@ -285,6 +285,10 @@ STATIC mp_obj_t array_binary_op(mp_binary_op_t op, mp_obj_t lhs_in, mp_obj_t rhs
             array_get_buffer(lhs_in, &lhs_bufinfo, MP_BUFFER_READ);
             mp_get_buffer_raise(rhs_in, &rhs_bufinfo, MP_BUFFER_READ);
 
+            if(lhs_bufinfo.typecode == 'O' && rhs_bufinfo.typecode != 'O') {
+                return MP_OBJ_NULL; // op not supported
+            }
+
             size_t sz = mp_binary_get_size('@', lhs_bufinfo.typecode, NULL);
 
             // convert byte count to element count (in case rhs is not multiple of sz)
@@ -375,6 +379,10 @@ STATIC mp_obj_t array_extend(mp_obj_t self_in, mp_obj_t arg_in) {
     // allow to extend by anything that has the buffer protocol (extension to CPython)
     mp_buffer_info_t arg_bufinfo;
     mp_get_buffer_raise(arg_in, &arg_bufinfo, MP_BUFFER_READ);
+
+    if(self->typecode == 'O' && arg_bufinfo.typecode != 'O') {
+        mp_raise_ValueError("cannot extend array(O) with non-object type");
+    }
 
     size_t sz = mp_binary_get_size('@', self->typecode, NULL);
 
