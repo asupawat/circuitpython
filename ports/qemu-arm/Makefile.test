@@ -8,7 +8,7 @@ CFLAGS += -DTEST
 
 $(BUILD)/test_main.o: $(BUILD)/genhdr/tests.h
 $(BUILD)/genhdr/tests.h:
-	(cd $(TOP)/tests; ./run-tests --write-exp)
+	(cd $(TOP)/tests; ./run-tests --auto-jobs --write-exp)
 	$(Q)echo "Generating $@";(cd $(TOP)/tests; ../tools/tinytest-codegen.py) > $@
 
 $(BUILD)/tinytest.o:
