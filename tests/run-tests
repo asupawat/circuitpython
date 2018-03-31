@@ -547,6 +547,7 @@ the last matching regex is used:
     if args.target == 'unix' or args.list_tests:
         pyb = None
     elif args.target in EXTERNAL_TARGETS:
+        args.jobs = 1
         import pyboard
         pyb = pyboard.Pyboard(args.device, args.baudrate, args.user, args.password)
         pyb.enter_raw_repl()
