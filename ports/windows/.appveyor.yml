@@ -22,7 +22,7 @@ test_script:
 - cmd: >-
     cd tests
 
-    %MICROPY_CPYTHON3% run-tests
+    %MICROPY_CPYTHON3% run-tests --auto-jobs
 
 # After the build/test phase for the MSVC build completes,
 # build and test with mingw-w64, release versions only.
@@ -39,7 +39,7 @@ after_test:
       throw "$env:MSYSTEM build exited with code $LASTEXITCODE"
     }
     cd (Join-Path $env:APPVEYOR_BUILD_FOLDER 'tests')
-    & $env:MICROPY_CPYTHON3 run-tests -e math_fun -e float2int_double -e float_parse -e math_domain_special
+    & $env:MICROPY_CPYTHON3 run-tests --auto-jobs -e math_fun -e float2int_double -e float_parse -e math_domain_special
     if ($LASTEXITCODE -ne 0) {
       throw "$env:MSYSTEM tests exited with code $LASTEXITCODE"
     }
