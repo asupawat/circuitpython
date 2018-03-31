@@ -367,7 +367,9 @@ def run_tests(pyb, tests, args, base_path="."):
         skip_tests.add('micropython/heapalloc_iter.py') # requires generators
         skip_tests.add('micropython/schedule.py') # native code doesn't check pending events
 
-    for test_file in tests:
+    def run_one_test(test_file):
+        nonlocal test_count, testcase_count, passed_count, failed_tests
+
         test_file = test_file.replace('\\', '/')
 
         if args.filters:
@@ -377,7 +379,7 @@ def run_tests(pyb, tests, args, base_path="."):
                 if pat.search(test_file):
                     verdict = action
             if verdict == "exclude":
-                continue
+                return
 
         test_basename = os.path.basename(test_file)
         test_name = os.path.splitext(test_basename)[0]
@@ -400,12 +402,12 @@ def run_tests(pyb, tests, args, base_path="."):
         if args.list_tests:
             if not skip_it:
                 print(test_file)
-            continue
+            return
 
         if skip_it:
             print("skip ", test_file)
             skipped_tests.append(test_name)
-            continue
+            return
 
         # get expected output
         test_file_expected = test_file + '.exp'
@@ -427,7 +429,7 @@ def run_tests(pyb, tests, args, base_path="."):
         output_expected = output_expected.replace(b'\r\n', b'\n')
 
         if args.write_exp:
-            continue
+            return
 
         # run MicroPython
         output_mupy = run_micropython(pyb, args, test_file)
@@ -435,7 +437,7 @@ def run_tests(pyb, tests, args, base_path="."):
         if output_mupy == b'SKIP\n':
             print("skip ", test_file)
             skipped_tests.append(test_name)
-            continue
+            return
 
         testcase_count += len(output_expected.splitlines())
 
@@ -456,6 +458,9 @@ def run_tests(pyb, tests, args, base_path="."):
             failed_tests.append(test_name)
 
         test_count += 1
+
+    for test_file in tests:
+        run_one_test(test_file)
 
     if args.list_tests:
         return True
