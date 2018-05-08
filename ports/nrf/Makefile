@@ -152,9 +152,11 @@ SRC_C += \
 	lib/utils/context_manager_helpers.c \
 	lib/utils/interrupt_char.c \
 	lib/utils/pyexec.c \
+	lib/utils/sys_stdio_mphal.c \
 	lib/libc/string0.c \
 	lib/mp-readline/readline.c \
 	internal_flash.c \
+	#lib/utils/stdout_helpers.c \
 
 
 DRIVERS_SRC_C += $(addprefix modules/,\
