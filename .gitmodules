@@ -111,3 +111,6 @@
 [submodule "ports/mimxrt10xx/sdk"]
 	path = ports/mimxrt10xx/sdk
 	url = https://github.com/adafruit/MIMXRT10xx_SDK
+[submodule "extmod/ulab"]
+	path = extmod/ulab
+	url = https://github.com/adafruit/circuitpython-ulab
