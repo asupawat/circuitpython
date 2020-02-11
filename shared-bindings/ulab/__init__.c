@@ -375,6 +375,7 @@ STATIC MP_DEFINE_STR_OBJ(ulab_version_obj, "0.26.7");
 //| Filtering functions
 //| -------------------
 //| .. method:: convolve(r, c=None)
+//|
 //|    :param ulab.array a:
 //|    :param ulab.array v:
 //|
