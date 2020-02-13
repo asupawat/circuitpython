@@ -117,7 +117,7 @@ ulab.c \
 vectorise.c \
 	)
 CFLAGS_MOD += -DMICROPY_PY_ULAB=1 -DMODULE_ULAB_ENABLED=1
-$(BUILD)/extmod/ulab/code/%.o: CFLAGS += -Wno-sign-compare -Wno-missing-prototypes -Wno-unused-parameter -Wno-missing-declarations -Wno-error -Wno-undef -DCIRCUITPY
+$(BUILD)/extmod/ulab/code/%.o: CFLAGS += -Wno-sign-compare -Wno-missing-prototypes -Wno-unused-parameter -Wno-missing-declarations -Wno-error -DCIRCUITPY
 endif
 
 # External modules written in C.
